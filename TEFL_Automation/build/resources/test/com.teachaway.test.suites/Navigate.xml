@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="PositiveTestSuite"  parallel="tests" thread-count="3">
+
+<!--        	 <parameter name="environment" value="local"></parameter>-->
+    <parameter name="setting" value="grid"></parameter>
+
+    <test name="PositiveTest-CH">
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="com.teachaway.test.cases.NavigateTest" />
+        </classes>
+    </test>
+
+    <test name="PositiveTest-FF">
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="com.teachaway.test.cases.NavigateTest" />
+        </classes>
+    </test>
+
+    <test name="PositiveTest-ME">
+        <parameter name="browser" value="edge"></parameter>
+        <classes>
+            <class name="com.teachaway.test.cases.NavigateTest" />
+        </classes>
+    </test>
+
+</suite>
