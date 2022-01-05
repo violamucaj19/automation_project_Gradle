@@ -10,7 +10,7 @@ public class NavigateTest extends BaseTest {
     @Parameters({"browser", "environment"})
     @Test
     public void init() throws Exception {
-        String expectedUrl = properties.getProperty("url");
+        String expectedUrl = properties.getProperty(CONFIG_KEY_URL);
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
     }

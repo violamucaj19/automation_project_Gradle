@@ -20,15 +20,16 @@ public class BaseTest {
     protected WebDriver driver;
     protected Logger log;
     protected Properties properties = new Properties();
-    public static final String GRIDSETTING = "grid";
-    public static final String PROPERTIESPATH = "src/main/resources/config.properties";
+    public static final String GRID_SETTING = "grid";
+    public static final String PROPERTIES_PATH = "src/main/resources/config.properties";
+    public static final String CONFIG_KEY_URL = "url";
 
     public BaseTest() {
 
 //        create Properties class object to access properties file
         FileInputStream fileInput = null;
         try {
-            fileInput = new FileInputStream(new File(PROPERTIESPATH));
+            fileInput = new FileInputStream(new File(PROPERTIES_PATH));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -42,10 +43,10 @@ public class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser", "setting"})
-    protected void setUp(@Optional("chrome") String browser, @Optional(GRIDSETTING) String setting, ITestContext ctx) throws MalformedURLException {
+    protected void setUp(@Optional("chrome") String browser, @Optional(GRID_SETTING) String setting, ITestContext ctx) throws MalformedURLException {
 //        Create Driver
         BrowserDriverFactory factory = new BrowserDriverFactory(browser);
-        if (setting.equals(GRIDSETTING)) {
+        if (setting.equals(GRID_SETTING)) {
             driver = factory.createGridDriver();
         } else {
             driver = factory.createDriver();
@@ -54,7 +55,7 @@ public class BaseTest {
 //        maximize browser window
         driver.manage().window().maximize();
 //        get site URL
-        driver.get(properties.getProperty("url"));
+        driver.get(properties.getProperty(CONFIG_KEY_URL));
 
 //        Set up test name and Logger
         setCurrentThreadName();
