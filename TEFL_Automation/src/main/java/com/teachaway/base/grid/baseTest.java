@@ -8,42 +8,21 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+import com.teachaway.utility.Constant;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Properties;
 
-public class BaseTest {
+public class baseTest {
     protected WebDriver driver;
     protected Logger log;
-    protected Properties prop = new Properties();
-
-    public BaseTest() {
-//        create Properties class object to access properties file
-        FileInputStream fileInput = null;
-        try {
-            fileInput = new FileInputStream(new File("src/main/resources/config.properties"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-//        load properties file
-        try {
-            prop.load(fileInput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser", "setting"})
-    protected void setUp(@Optional("chrome") String browser, @Optional("grid") String setting, ITestContext ctx) throws MalformedURLException {
+    protected void setUp(@Optional("chrome") String browser, @Optional(Constant.GridSetting) String setting, ITestContext ctx) throws MalformedURLException {
 //        Create Driver
-        BrowserDriverFactory factory = new BrowserDriverFactory(browser);
-        if (setting.equals("grid")) {
-            driver = factory.createDriverGrid();
+        browserDriverFactory factory = new browserDriverFactory(browser);
+        if (setting.equals(Constant.GridSetting)) {
+            driver = factory.createGridDriver();
         } else {
             driver = factory.createDriver();
         }
@@ -51,7 +30,7 @@ public class BaseTest {
 //        maximize browser window
         driver.manage().window().maximize();
 //        get site URL
-        driver.get(prop.getProperty("url"));
+        driver.get(Constant.url);
 
 //        Set up test name and Logger
         setCurrentThreadName();
@@ -66,7 +45,7 @@ public class BaseTest {
         driver.quit();
     }
 
-    //        Sets thread name which includes thread id
+//    Sets thread name which includes thread id
     private void setCurrentThreadName() {
         Thread thread = Thread.currentThread();
         String threadName = thread.getName();

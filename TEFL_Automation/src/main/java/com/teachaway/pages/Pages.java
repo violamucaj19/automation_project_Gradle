@@ -1,10 +1,9 @@
 package com.teachaway.pages;
 
-import com.teachaway.base.grid.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class Pages extends BaseTest {
+public class Pages {
     WebDriver driver;
 
     public Pages(WebDriver driver) {

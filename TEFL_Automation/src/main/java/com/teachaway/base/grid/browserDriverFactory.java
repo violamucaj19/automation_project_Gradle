@@ -1,5 +1,6 @@
 package com.teachaway.base.grid;
 
+import com.teachaway.utility.Constant;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,24 +15,23 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class BrowserDriverFactory extends BaseTest {
+public class browserDriverFactory {
 
-    //        Driver Setup
+    //    Driver Setup
     private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private String browser;
 
-    public BrowserDriverFactory(String browser) {
+    public browserDriverFactory(String browser) {
         this.browser = browser.toLowerCase();
     }
 
     public static String getDriverPath(String browser) {
         String OS = System.getProperty("os.name");
 
-        if (OS.contains("Window")) {
+        if (OS.contains(Constant.WindowOP)) {
             return browser + ".exe";
-        } else {
-            return browser;
         }
+        return browser;
     }
 
     public WebDriver createDriver() {
@@ -40,47 +40,50 @@ public class BrowserDriverFactory extends BaseTest {
 //        Creating driver locally
         switch (browser) {
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", getDriverPath("chromedriver"));
+                System.setProperty(Constant.ChromeProperties, getDriverPath(Constant.ChromeDriver));
                 driver.set(new ChromeDriver());
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", getDriverPath("geckodriver"));
+                System.setProperty(Constant.FoxProperties, getDriverPath(Constant.FoxDriver));
                 driver.set(new FirefoxDriver());
                 break;
             case "edge":
-                System.setProperty("webdriver.msedge.driver", getDriverPath("msedgedriver"));
+                System.setProperty(Constant.EdgeProperties, getDriverPath(Constant.EdgeDriver));
                 driver.set(new EdgeDriver());
                 break;
         }
+
         return driver.get();
     }
 
-    //            Create Options
+    //    Create Options
     public Capabilities settingOptions(String browserName, String capability, Capabilities option) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         System.out.println("Starting " + browser + " on grid");
         capabilities.setCapability(capability, option);
         capabilities.setBrowserName(browserName);
-        driver.set(new RemoteWebDriver(new URL(prop.getProperty("nodeURL")), (Capabilities) option));
+        driver.set(new RemoteWebDriver(new URL(Constant.nodeURL), (Capabilities) option));
+
         return (Capabilities) option;
     }
 
-    public WebDriver createDriverGrid() throws MalformedURLException {
+    public WebDriver createGridDriver() throws MalformedURLException {
 
 //        Creating driver on grid
         switch (browser) {
             case "chrome":
-                settingOptions("Chrome", "ChromeOptions.CAPABILITY", (Capabilities) new ChromeOptions());
+                settingOptions(Constant.ChromeBrowser, Constant.ChromeCapability, (Capabilities) new ChromeOptions());
                 break;
             case "firefox":
-                settingOptions("Firefox", "FirefoxOptions.FIREFOX_OPTIONS", (Capabilities) new FirefoxOptions());
+                settingOptions(Constant.FoxBrowser, Constant.FoxCapability, (Capabilities) new FirefoxOptions());
                 break;
             case "edge":
-                settingOptions("Edge", "EdgeOptions.CAPABILITY", (Capabilities) new EdgeOptions());
+                settingOptions(Constant.EdgeBrowser, Constant.EdgeCapability, (Capabilities) new EdgeOptions());
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + browser);
         }
+
         return driver.get();
     }
 }
