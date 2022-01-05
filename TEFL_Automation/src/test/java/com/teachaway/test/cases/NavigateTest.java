@@ -1,18 +1,16 @@
 package com.teachaway.test.cases;
 
-import com.teachaway.base.grid.baseTest;
+import com.teachaway.base.grid.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import com.teachaway.utility.Constant;
 
-
-public class NavigateTest extends baseTest {
+public class NavigateTest extends BaseTest {
 
     @Parameters({"browser", "environment"})
     @Test
     public void init() throws Exception {
-        String expectedUrl = Constant.url;
+        String expectedUrl = properties.getProperty("url");
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
     }
