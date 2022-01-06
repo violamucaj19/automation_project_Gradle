@@ -30,8 +30,9 @@ public class BrowserDriverFactory extends BaseTest {
     public static final String EDGE_CAPABILITY = "EdgeOptions.CAPABILITY";
     public static final String WINDOW_OP = "Window";
     public static final String NODE_URL = "nodeURL";
+    public static final String OS_NAME = "os.name";
 
-    //Driver Setup
+    // Driver Setup
     private ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private String browser;
 
@@ -40,7 +41,7 @@ public class BrowserDriverFactory extends BaseTest {
     }
 
     public static String getDriverPath(String browser) {
-        String OS = System.getProperty("os.name");
+        String OS = System.getProperty(OS_NAME);
 
         if (OS.contains(WINDOW_OP)) {
             return browser + ".exe";
@@ -51,7 +52,7 @@ public class BrowserDriverFactory extends BaseTest {
     public WebDriver createDriver() {
         System.out.println("Starting " + browser + " locally");
 
-        //Creating driver locally
+        // Creating driver locally
         switch (browser) {
             case CHROME_BROWSER:
                 System.setProperty(CHROME_PROPERTIES, getDriverPath(CHROME_DRIVER));
@@ -70,7 +71,7 @@ public class BrowserDriverFactory extends BaseTest {
         return driver.get();
     }
 
-    //Create Options
+    // Create Options
     public Capabilities settingOptions(String browserName, String capability, Capabilities option) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         System.out.println("Starting " + browser + " on grid");
@@ -83,7 +84,7 @@ public class BrowserDriverFactory extends BaseTest {
 
     public WebDriver createGridDriver() throws MalformedURLException {
 
-        //Creating driver on grid
+        // Creating driver on grid
         switch (browser) {
             case CHROME_BROWSER:
                 settingOptions(WordUtils.capitalize(CHROME_BROWSER), CHROME_CAPABILITY, (Capabilities) new ChromeOptions());
