@@ -23,17 +23,20 @@ public class BaseTest {
     public static final String GRID_SETTING = "grid";
     public static final String PROPERTIES_PATH = "src/main/resources/config.properties";
     public static final String CONFIG_KEY_URL = "url";
+    public static final String CHROME_BROWSER = "chrome";
+    public static final String WEB_DIRECTORY = "browser";
+    public static final String CONFIG_SETTING = "setting";
 
     public BaseTest() {
 
-//        create Properties class object to access properties file
+        //create Properties class object to access properties file
         FileInputStream fileInput = null;
         try {
             fileInput = new FileInputStream(new File(PROPERTIES_PATH));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-//        load properties file
+        //load properties file
         try {
             properties.load(fileInput);
         } catch (IOException e) {
@@ -42,9 +45,9 @@ public class BaseTest {
     }
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters({"browser", "setting"})
-    protected void setUp(@Optional("chrome") String browser, @Optional(GRID_SETTING) String setting, ITestContext ctx) throws MalformedURLException {
-//        Create Driver
+    @Parameters({WEB_DIRECTORY, CONFIG_SETTING})
+    protected void setUp(@Optional(CHROME_BROWSER) String browser, @Optional(GRID_SETTING) String setting, ITestContext ctx) throws MalformedURLException {
+        //Create Driver
         BrowserDriverFactory factory = new BrowserDriverFactory(browser);
         if (setting.equals(GRID_SETTING)) {
             driver = factory.createGridDriver();
@@ -52,12 +55,12 @@ public class BaseTest {
             driver = factory.createDriver();
         }
 
-//        maximize browser window
+        //maximize browser window
         driver.manage().window().maximize();
-//        get site URL
+        //get site URL
         driver.get(properties.getProperty(CONFIG_KEY_URL));
 
-//        Set up test name and Logger
+        //Set up test name and Logger
         setCurrentThreadName();
         String testName = ctx.getCurrentXmlTest().getName();
         log = LogManager.getLogger(testName);
@@ -65,12 +68,12 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     protected void tearDown() {
-//        Closing driver
+        //Closing driver
         log.info("[Closing driver]");
         driver.quit();
     }
 
-//    Sets thread name which includes thread id
+    //Sets thread name which includes thread id
     private void setCurrentThreadName() {
         Thread thread = Thread.currentThread();
         String threadName = thread.getName();

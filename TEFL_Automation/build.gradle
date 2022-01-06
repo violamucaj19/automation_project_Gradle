@@ -23,6 +23,7 @@ dependencies {
     implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '5.1.0'
     implementation group: 'io.netty', name: 'netty-handler', version: '4.1.68.Final'
     implementation group: 'net.savantly', name: 'parent-pom', version: '1.0.0-RELEASE', ext: 'pom'
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.9'
 
 }
 

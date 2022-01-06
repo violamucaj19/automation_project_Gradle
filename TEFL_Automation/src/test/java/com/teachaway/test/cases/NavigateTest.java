@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class NavigateTest extends BaseTest {
 
-    @Parameters({"browser", "environment"})
+    @Parameters({WEB_DIRECTORY, CONFIG_SETTING})
     @Test
     public void init() throws Exception {
         String expectedUrl = properties.getProperty(CONFIG_KEY_URL);
