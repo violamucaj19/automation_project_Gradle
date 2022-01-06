@@ -15,11 +15,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class BrowserDriverFactory extends BaseTest {
+public class BrowserDriverFactory {
 
     public static final String CHROME_DRIVER = "chromedriver";
     public static final String CHROME_PROPERTIES = "webdriver.chrome.driver";
     public static final String CHROME_CAPABILITY = "ChromeOptions.CAPABILITY";
+    public static final String CHROME_BROWSER = "chrome";
     public static final String FIREFOX_DRIVER = "geckodriver";
     public static final String FIREFOX_PROPERTIES = "webdriver.gecko.driver";
     public static final String FIREFOX_BROWSER = "firefox";
@@ -29,7 +30,6 @@ public class BrowserDriverFactory extends BaseTest {
     public static final String EDGE_BROWSER = "edge";
     public static final String EDGE_CAPABILITY = "EdgeOptions.CAPABILITY";
     public static final String WINDOW_OP = "Window";
-    public static final String NODE_URL = "nodeURL";
     public static final String OS_NAME = "os.name";
 
     // Driver Setup
@@ -72,28 +72,28 @@ public class BrowserDriverFactory extends BaseTest {
     }
 
     // Create Options
-    public Capabilities settingOptions(String browserName, String capability, Capabilities option) throws MalformedURLException {
+    public Capabilities settingOptions(String browserName, String capability, Capabilities option, String remoteDriverURL) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         System.out.println("Starting " + browser + " on grid");
         capabilities.setCapability(capability, option);
         capabilities.setBrowserName(browserName);
-        driver.set(new RemoteWebDriver(new URL(properties.getProperty(NODE_URL)), (Capabilities) option));
+        driver.set(new RemoteWebDriver(new URL(remoteDriverURL), (Capabilities) option));
 
         return (Capabilities) option;
     }
 
-    public WebDriver createGridDriver() throws MalformedURLException {
+    public WebDriver createGridDriver(String remoteDriverURL) throws MalformedURLException {
 
         // Creating driver on grid
         switch (browser) {
             case CHROME_BROWSER:
-                settingOptions(WordUtils.capitalize(CHROME_BROWSER), CHROME_CAPABILITY, (Capabilities) new ChromeOptions());
+                settingOptions(WordUtils.capitalize(CHROME_BROWSER), CHROME_CAPABILITY, (Capabilities) new ChromeOptions(), remoteDriverURL);
                 break;
             case FIREFOX_BROWSER:
-                settingOptions(WordUtils.capitalize(FIREFOX_BROWSER), FIREFOX_CAPABILITY, (Capabilities) new FirefoxOptions());
+                settingOptions(WordUtils.capitalize(FIREFOX_BROWSER), FIREFOX_CAPABILITY, (Capabilities) new FirefoxOptions(), remoteDriverURL);
                 break;
             case EDGE_BROWSER:
-                settingOptions(WordUtils.capitalize(EDGE_BROWSER), EDGE_CAPABILITY, (Capabilities) new EdgeOptions());
+                settingOptions(WordUtils.capitalize(EDGE_BROWSER), EDGE_CAPABILITY, (Capabilities) new EdgeOptions(), remoteDriverURL);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + browser);

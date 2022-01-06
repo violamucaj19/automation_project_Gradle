@@ -26,6 +26,8 @@ public class BaseTest {
     public static final String CHROME_BROWSER = "chrome";
     public static final String WEB_DIRECTORY = "browser";
     public static final String CONFIG_SETTING = "setting";
+    public static final String NODE_URL = "nodeURL";
+
 
     public BaseTest() {
 
@@ -50,7 +52,7 @@ public class BaseTest {
         // Create Driver
         BrowserDriverFactory factory = new BrowserDriverFactory(browser);
         if (setting.equals(GRID_SETTING)) {
-            driver = factory.createGridDriver();
+            driver = factory.createGridDriver(properties.getProperty(NODE_URL));
         } else {
             driver = factory.createDriver();
         }
