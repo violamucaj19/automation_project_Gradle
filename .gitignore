@@ -2,3 +2,5 @@
 *.jar
 .idea/
 .gradle/
+*resources/*driver
+build/
