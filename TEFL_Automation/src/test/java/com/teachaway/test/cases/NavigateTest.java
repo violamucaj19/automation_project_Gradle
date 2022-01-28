@@ -9,7 +9,8 @@ public class NavigateTest extends BaseTest {
 
     @Parameters({WEB_DIRECTORY, CONFIG_SETTING})
     @Test
-    public void init() throws Exception {
+    public void init() {
+        driver.get(properties.getProperty(CONFIG_KEY_URL));
         String expectedUrl = properties.getProperty(CONFIG_KEY_URL);
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
