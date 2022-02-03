@@ -79,9 +79,15 @@ public class BaseTest {
         }
         catch(TimeoutException e){
             System.err.println(element + "Couldn't find element after waiting");
+            e.printStackTrace();
+        }
+        catch (NoSuchElementException e){
+            System.err.println("Unable to locate element with xpath: " + element);
+            e.printStackTrace();
         }
         catch(ElementNotVisibleException e){
             System.err.println(element + "is not visible");
+            e.printStackTrace();
         }
     }
 
@@ -93,11 +99,12 @@ public class BaseTest {
         }
         catch(TimeoutException e){
             System.err.println("Could not find the required URL after waiting");
+            e.printStackTrace();
         }
     }
 
-    // Asserting if clicking a Web Element to the expected url
-    public void assertUrls(String expectedUrl, String actualUrl) {
+    // Asserting if clicking a Web Element redirects to the expected url
+    protected void assertUrls(String expectedUrl, String actualUrl) {
         try {
             Assert.assertEquals(actualUrl, expectedUrl);
             log.info("URL verification is complete.");
@@ -105,13 +112,16 @@ public class BaseTest {
             System.err.println("Not redirected to the expected Url");
             System.err.println("Expected to be redirected to: " + expectedUrl);
             System.err.println("Instead redirected to: " + actualUrl);
+            e.printStackTrace();
         }
     }
 
     // Clicks on a Web Element that redirects to another page
-    protected void clickOnElement(WebDriver driver, WebElement element, String text, String expectedUrl, String urlFragment){
+    protected void clickOnElement(WebDriver driver, WebElement element, String expectedUrl, String urlFragment){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
+            waitForElement(driver, element);
+            String text = element.getText();
             js.executeScript("arguments[0].scrollIntoView(true);", element);
             js.executeScript("arguments[0].click();", element);
             System.out.println(" ");
@@ -120,13 +130,40 @@ public class BaseTest {
             assertUrls(expectedUrl, driver.getCurrentUrl());
         }
         catch (NoSuchElementException e){
-            System.err.println("\n" + "Unable to locate element " + element);
+            log.info("Unable to locate element with xpath: " + element);
+            e.printStackTrace();
         }
         catch (ElementClickInterceptedException e){
-            System.err.println("\n" + element + " is not clickable");
+            System.err.println(element.getText() + " can not be clicked");
+            e.printStackTrace();
         }
         catch (ElementNotInteractableException e){
-            System.err.println("\n" + element + " is not interactable");
+            System.err.println(element.getText() + " is not interactable with");
+            e.printStackTrace();
+        }
+    }
+
+    //clicks on an element that does not redirect to another page
+    protected void clickOnElement(WebDriver driver, WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        try {
+            waitForElement(driver, element);
+            String text = element.getText();
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+            js.executeScript("arguments[0].click();", element);
+            log.info("Clicked " + text);
+        }
+        catch (NoSuchElementException e){
+            log.info("Unable to locate element with xpath: " + element);
+            e.printStackTrace();
+        }
+        catch (ElementClickInterceptedException e){
+            System.err.println(element.getText() + " can not be clicked");
+            e.printStackTrace();
+        }
+        catch (ElementNotInteractableException e){
+            System.err.println(element.getText() + " is not interactable with");
+            e.printStackTrace();
         }
     }
 

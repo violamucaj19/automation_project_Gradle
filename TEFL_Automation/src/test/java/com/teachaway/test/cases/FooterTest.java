@@ -6,8 +6,9 @@ import org.testng.annotations.Test;
 
 public class FooterTest extends BaseTest {
 
+    //Tests the links in TeflOnline footer and its functionalities. Goes back to TeflOnline home page after each redirection
     @Test
-    public void init() {
+    public void footerTestCases() {
         Footer footerPageCheck = new Footer(driver);
 
         String homeUrl = properties.getProperty(TEFL_ONLINE_URL);
@@ -47,7 +48,7 @@ public class FooterTest extends BaseTest {
 
         footerPageCheck.checkForTeachawayLogo();
 
-        footerPageCheck.changeCountryToCanada();
+        footerPageCheck.changeCountry();
 
         footerPageCheck.subscribeToEmails();
 

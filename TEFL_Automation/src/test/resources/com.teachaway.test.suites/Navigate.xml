@@ -8,24 +8,24 @@
     <test name="PositiveTest-CH">
         <parameter name="browser" value="chrome"></parameter>
         <classes>
-            <class name="com.teachaway.test.cases.NavigateTest"/>
             <class name="com.teachaway.test.cases.FooterTest" />
+            <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
         </classes>
     </test>
 
     <test name="PositiveTest-FF">
         <parameter name="browser" value="firefox"></parameter>
         <classes>
-            <class name="com.teachaway.test.cases.NavigateTest"/>
             <class name="com.teachaway.test.cases.FooterTest" />
+            <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
         </classes>
     </test>
 
     <test name="PositiveTest-ME">
         <parameter name="browser" value="edge"></parameter>
         <classes>
-            <class name="com.teachaway.test.cases.NavigateTest"/>
             <class name="com.teachaway.test.cases.FooterTest" />
+            <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
         </classes>
     </test>
 
