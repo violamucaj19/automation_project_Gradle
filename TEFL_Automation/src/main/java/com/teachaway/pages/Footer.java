@@ -20,14 +20,6 @@ public class Footer extends BaseTest {
     public static final String REFUND_POLICY_URL = "refundPolicyUrl";
     public static final String CONTACT_URL = "contactUrl";
     public static final String COUNTRY_XPATH = "//body//div[@id='shopify-section-footer']//button[@aria-describedby='FooterCountryLabel']";
-    public static final String COURSES_URL_FRAGMENT = "/enroll";
-    public static final String LIVE_INFO_SESSION_URL_FRAGMENT = "/information-session";
-    public static final String TEFL_BLOG_URL_FRAGMENT = "/tefl-resources";
-    public static final String TEFL_BROCHURE_URL_FRAGMENT = "/tefl-online-program-brochure";
-    public static final String TEFL_TRAINING_URL_FRAGMENT = "/tefl-training-for-institutions";
-    public static final String STUDENT_LOGIN_URL_FRAGMENT = "/login";
-    public static final String REFUND_POLICY_URL_FRAGMENT = "/refund-policy";
-    public static final String CONTACT_URL_FRAGMENT = "/contact";
 
     public Footer (WebDriver driver) {
         this.driver = driver;
@@ -83,43 +75,43 @@ public class Footer extends BaseTest {
     }
 
     public void clickOnEnroll() {
-        clickOnElementAndAssertUrl(driver, enrollLink, properties.getProperty(COURSES_URL), COURSES_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, enrollLink, properties.getProperty(COURSES_URL));
     }
 
     public void clickOnLiveInfoSession() {
-        clickOnElementAndAssertUrl(driver, liveInfoSessionLink, properties.getProperty(LIVE_INFO_SESSION_URL), LIVE_INFO_SESSION_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, liveInfoSessionLink, properties.getProperty(LIVE_INFO_SESSION_URL));
     }
 
     public void clickOnTeflBlog() {
-        clickOnElementAndAssertUrl(driver, teflBlogLink, properties.getProperty(TEFL_BLOG_URL), TEFL_BLOG_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, teflBlogLink, properties.getProperty(TEFL_BLOG_URL));
     }
 
     public void clickOnTeflBrochure() {
-        clickOnElementAndAssertUrl(driver, teflBrochureLink, properties.getProperty(TEFL_BROCHURE_URL), TEFL_BROCHURE_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, teflBrochureLink, properties.getProperty(TEFL_BROCHURE_URL));
     }
 
     public void clickOnTeflTraining() {
-        clickOnElementAndAssertUrl(driver, teflTrainingLink, properties.getProperty(TEFL_TRAINING_URL), TEFL_TRAINING_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, teflTrainingLink, properties.getProperty(TEFL_TRAINING_URL));
     }
 
     public void clickOnStudentLogin() {
-        clickOnElementAndAssertUrl(driver, studentLoginLink, properties.getProperty(STUDENT_LOGIN_URL), STUDENT_LOGIN_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, studentLoginLink, properties.getProperty(STUDENT_LOGIN_URL));
     }
 
     public void clickOnCourseFees() {
-        clickOnElementAndAssertUrl(driver, courseFeesLink, properties.getProperty(COURSES_URL), COURSES_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, courseFeesLink, properties.getProperty(COURSES_URL));
     }
 
     public void clickOnRefundPolicy() {
-        clickOnElementAndAssertUrl(driver, refundPolicyLink, properties.getProperty(REFUND_POLICY_URL), REFUND_POLICY_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, refundPolicyLink, properties.getProperty(REFUND_POLICY_URL));
     }
 
     public void clickOnTeflCertification(){
-        clickOnElementAndAssertUrl(driver, teflCertificationLink, properties.getProperty(COURSES_URL), COURSES_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, teflCertificationLink, properties.getProperty(COURSES_URL));
     }
 
     public void clickOnContactUs(){
-        clickOnElementAndAssertUrl(driver, contactUsLink, properties.getProperty(CONTACT_URL), CONTACT_URL_FRAGMENT);
+        clickOnElementAndAssertUrl(driver, contactUsLink, properties.getProperty(CONTACT_URL));
     }
 
     //Checks if Teach Away logo is displayed in the footer

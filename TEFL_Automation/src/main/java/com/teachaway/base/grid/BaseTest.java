@@ -91,37 +91,26 @@ public class BaseTest {
         }
     }
 
-    // waiting for url to change after clicking a Web Element
-    protected void waitforUrl(WebDriver driver, String urlFragment){
+    // waiting for url to change after clicking a Web Element and asserting if it redirects to the expected URL
+    protected void assertUrls(WebDriver driver, String expectedUrl){
         try{
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            wait.until(ExpectedConditions.urlContains(urlFragment));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.urlToBe(expectedUrl));
+            log.info("URL verification is complete.");
         }
         catch(TimeoutException e){
             System.err.println("Could not find the required URL after waiting");
-            e.printStackTrace();
-        }
-    }
-
-    // Asserting if clicking a Web Element redirects to the expected url
-    protected void assertUrls(String expectedUrl, String actualUrl) {
-        try {
-            Assert.assertEquals(actualUrl, expectedUrl);
-            log.info("URL verification is complete.");
-        } catch (java.lang.AssertionError e) {
-            System.err.println("Not redirected to the expected Url");
             System.err.println("Expected to be redirected to: " + expectedUrl);
-            System.err.println("Instead redirected to: " + actualUrl);
+            System.err.println("Instead redirected to: " + driver.getCurrentUrl());
             e.printStackTrace();
         }
     }
 
     // Clicks on a Web Element that redirects to another page
-    protected void clickOnElementAndAssertUrl(WebDriver driver, WebElement element, String expectedUrl, String urlFragment){
+    protected void clickOnElementAndAssertUrl(WebDriver driver, WebElement element, String expectedUrl){
         System.out.println(" ");
         clickOnElement(driver, element);
-        waitforUrl(driver, urlFragment);
-        assertUrls(expectedUrl, driver.getCurrentUrl());
+        assertUrls(driver, expectedUrl);
     }
 
     //clicks on an element that does not redirect to another page
