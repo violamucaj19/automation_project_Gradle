@@ -14,7 +14,7 @@ public class FooterTest extends BaseTest {
         String homeUrl = properties.getProperty(TEFL_ONLINE_URL);
         driver.get(homeUrl);
 
-        footerPageCheck.clickOnAcceptBtn();
+        footerPageCheck.clickOnAcceptButton();
 
         footerPageCheck.clickOnEnroll();
         driver.get(homeUrl);
@@ -49,8 +49,6 @@ public class FooterTest extends BaseTest {
         footerPageCheck.checkForTeachawayLogo();
 
         footerPageCheck.changeCountry();
-
-        footerPageCheck.subscribeToEmails();
 
     }
 

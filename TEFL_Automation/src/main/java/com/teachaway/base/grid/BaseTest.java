@@ -117,30 +117,11 @@ public class BaseTest {
     }
 
     // Clicks on a Web Element that redirects to another page
-    protected void clickOnElement(WebDriver driver, WebElement element, String expectedUrl, String urlFragment){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        try {
-            waitForElement(driver, element);
-            String text = element.getText();
-            js.executeScript("arguments[0].scrollIntoView(true);", element);
-            js.executeScript("arguments[0].click();", element);
-            System.out.println(" ");
-            log.info("Clicked " + text);
-            waitforUrl(driver, urlFragment);
-            assertUrls(expectedUrl, driver.getCurrentUrl());
-        }
-        catch (NoSuchElementException e){
-            log.info("Unable to locate element with xpath: " + element);
-            e.printStackTrace();
-        }
-        catch (ElementClickInterceptedException e){
-            System.err.println(element.getText() + " can not be clicked");
-            e.printStackTrace();
-        }
-        catch (ElementNotInteractableException e){
-            System.err.println(element.getText() + " is not interactable with");
-            e.printStackTrace();
-        }
+    protected void clickOnElementAndAssertUrl(WebDriver driver, WebElement element, String expectedUrl, String urlFragment){
+        System.out.println(" ");
+        clickOnElement(driver, element);
+        waitforUrl(driver, urlFragment);
+        assertUrls(expectedUrl, driver.getCurrentUrl());
     }
 
     //clicks on an element that does not redirect to another page
