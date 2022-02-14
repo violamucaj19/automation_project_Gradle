@@ -71,6 +71,7 @@ public class Footer extends BaseTest {
     WebElement teachawayLogo;
 
     public void clickOnAcceptButton() {
+        waitForElement(driver, acceptButton);
         clickOnElement(driver, acceptButton);
     }
 

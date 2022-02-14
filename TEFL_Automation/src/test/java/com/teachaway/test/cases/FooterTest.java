@@ -5,6 +5,7 @@ import com.teachaway.base.grid.BaseTest;
 import org.testng.annotations.Test;
 
 public class FooterTest extends BaseTest {
+    public static final String TEFL_ONLINE_URL = "teflOnlineUrl";
 
     //Tests the links in TeflOnline footer and its functionalities. Goes back to TeflOnline home page after each redirection
     @Test

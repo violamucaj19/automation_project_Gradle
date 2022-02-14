@@ -26,8 +26,6 @@ public class BaseTest {
     protected Properties properties = new Properties();
     public static final String GRID_SETTING = "grid";
     public static final String PROPERTIES_PATH = "src/main/resources/config.properties";
-    public static final String CONFIG_KEY_URL = "url";
-    public static final String TEFL_ONLINE_URL = "teflOnlineUrl";
     public static final String CHROME_BROWSER = "chrome";
     public static final String WEB_DIRECTORY = "browser";
     public static final String CONFIG_SETTING = "setting";
@@ -117,7 +115,6 @@ public class BaseTest {
     protected void clickOnElement(WebDriver driver, WebElement element){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
-            waitForElement(driver, element);
             String text = element.getText();
             js.executeScript("arguments[0].scrollIntoView(true);", element);
             js.executeScript("arguments[0].click();", element);
