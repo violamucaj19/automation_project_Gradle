@@ -3,7 +3,10 @@ package com.teachaway.base.grid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -25,7 +28,8 @@ public class BaseTest {
     public static Logger log;
     protected Properties properties = new Properties();
     public static final String GRID_SETTING = "grid";
-    public static final String PROPERTIES_PATH = "src/main/resources/config.properties";
+    public static final String CONFIG_PROPERTIES_PATH = "src/main/resources/config.properties";
+    public static final String TEXTSOURCE_PROPERTIES_PATH = "src/main/resources/TextSource.properties";
     public static final String CHROME_BROWSER = "chrome";
     public static final String WEB_DIRECTORY = "browser";
     public static final String CONFIG_SETTING = "setting";
@@ -35,15 +39,18 @@ public class BaseTest {
     public BaseTest() {
 
         // Create Properties class object to access properties file
-        FileInputStream fileInput = null;
+        FileInputStream configFileInput = null;
+        FileInputStream textFileInput = null;
         try {
-            fileInput = new FileInputStream(new File(PROPERTIES_PATH));
+            configFileInput = new FileInputStream(new File(CONFIG_PROPERTIES_PATH));
+            textFileInput = new FileInputStream(new File(TEXTSOURCE_PROPERTIES_PATH));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         // Load properties file
         try {
-            properties.load(fileInput);
+            properties.load(configFileInput);
+            properties.load(textFileInput);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,26 +78,26 @@ public class BaseTest {
 
     // waiting for Web Element to be visible
     protected void waitForElement(WebDriver driver, WebElement element){
-        try{
+        try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.visibilityOf(element));
         }
         catch(TimeoutException e){
-            System.err.println(element + "Couldn't find element after waiting");
+            System.err.println(element + "Couldn't find element after waiting" + "\n");
             e.printStackTrace();
         }
         catch (NoSuchElementException e){
-            System.err.println("Unable to locate element with xpath: " + element);
+            System.err.println("Unable to locate element with xpath: " + element + "\n");
             e.printStackTrace();
         }
         catch(ElementNotVisibleException e){
-            System.err.println(element + "is not visible");
+            System.err.println(element + "is not visible" + "\n");
             e.printStackTrace();
         }
     }
 
     // waiting for url to change after clicking a Web Element and asserting if it redirects to the expected URL
-    protected void assertUrls(WebDriver driver, String expectedUrl){
+    protected void assertUrls(WebDriver driver, String expectedUrl) {
         try{
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.urlToBe(expectedUrl));
@@ -99,13 +106,13 @@ public class BaseTest {
         catch(TimeoutException e){
             System.err.println("Could not find the required URL after waiting");
             System.err.println("Expected to be redirected to: " + expectedUrl);
-            System.err.println("Instead redirected to: " + driver.getCurrentUrl());
+            System.err.println("Instead redirected to: " + driver.getCurrentUrl() + "\n");
             e.printStackTrace();
         }
     }
 
     // Clicks on a Web Element that redirects to another page
-    protected void clickOnElementAndAssertUrl(WebDriver driver, WebElement element, String expectedUrl){
+    protected void clickOnElementAndAssertUrl(WebDriver driver, WebElement element, String expectedUrl) {
         System.out.println(" ");
         clickOnElement(driver, element);
         assertUrls(driver, expectedUrl);
@@ -118,19 +125,149 @@ public class BaseTest {
             String text = element.getText();
             js.executeScript("arguments[0].scrollIntoView(true);", element);
             js.executeScript("arguments[0].click();", element);
-            log.info("Clicked " + text);
+            log.info("Clicked " + text + "\n");
         }
         catch (NoSuchElementException e){
-            log.info("Unable to locate element with xpath: " + element);
+            log.info("Unable to locate element with xpath: " + element + "\n");
+            e.printStackTrace();
+        }
+        catch (ElementClickInterceptedException e) {
+            System.err.println(element.getText() + " can not be clicked" + "\n");
+            e.printStackTrace();
+        }
+        catch (ElementNotInteractableException e) {
+            System.err.println(element.getText() + " is not interactable with" + "\n");
+            e.printStackTrace();
+        }
+    }
+
+    protected void clickOnElementAndDisplayeText(WebDriver driver, WebElement element, String textToBeDisplayed) {
+        System.out.println(" ");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        try {
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+            js.executeScript("arguments[0].click();", element);
+            log.info("Clicked " + textToBeDisplayed + "\n");
+        }
+        catch (NoSuchElementException e){
+            log.info("Unable to locate element with xpath: " + element + "\n");
             e.printStackTrace();
         }
         catch (ElementClickInterceptedException e){
-            System.err.println(element.getText() + " can not be clicked");
+            System.err.println(element.getText() + " can not be clicked" + "\n");
             e.printStackTrace();
         }
-        catch (ElementNotInteractableException e){
-            System.err.println(element.getText() + " is not interactable with");
+        catch (ElementNotInteractableException e) {
+            System.err.println(element.getText() + " is not interactable with" + "\n");
             e.printStackTrace();
+        }
+    }
+
+    protected void hoverElement(WebDriver driver, WebElement element, String textDisplayed) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Actions actions = new Actions(driver);
+        try {
+            js.executeScript("arguments[0].scrollIntoView();", element);
+            actions.moveToElement(element).build().perform();
+            log.info(textDisplayed);
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to locate element: " + element);
+        } catch (ElementNotInteractableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void hoverAndClick(WebDriver driver, WebElement mainButton, WebElement subButton, String mainText, String subText) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            Actions actions = new Actions(driver);
+            hoverElement(driver, mainButton, "Hovered " + mainText);
+            waitForElement(driver, subButton);
+            hoverElement(driver, subButton, "Clicked " + subText);
+            actions.click().build().perform();
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        } catch (ElementNotInteractableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Confirm element is displayed
+    protected void isElementDisplayed(WebElement element) {
+        try {
+            boolean DisplayElement = element.isDisplayed();
+            log.info("Element displayed is: " + element + "" + DisplayElement);
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to find element: " + element);
+        }
+    }
+
+    // Confirm text that is displayed
+    protected void isTextDisplayed(WebElement element, String text) {
+        try {
+            String data = element.getText();
+            Assert.assertEquals(data, text);
+            log.info("Text verification is complete. The displayed text: " + text);
+        } catch (java.lang.AssertionError e) {
+            System.err.println("Displayed data is not correct");
+            System.err.println("Expected to be displayed: " + text);
+            e.printStackTrace();
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to find element" + element);
+            e.printStackTrace();
+        }
+    }
+
+    // Confirm the number that is displayed
+    protected void isQuantityDisplayed(WebElement element, String text) {
+        try {
+            String data = element.getAttribute("value");
+            Assert.assertEquals(data, text);
+            log.info("Quantity verification is complete. The displayed quantity: " + text);
+        } catch (java.lang.AssertionError e) {
+            System.err.println("The quantity displayed is not correct");
+            System.err.println("Expected to be displayed: " + text);
+            e.printStackTrace();
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to locate element: " + element);
+        }
+    }
+
+    // Select one option from the dropdown list
+    protected void selectDropdownItem(WebElement element, String option) {
+        try {
+            Select drpElement = new Select(element);
+            drpElement.selectByVisibleText(option);
+            log.info("It is selected: " + option + " from: " + element.getAttribute("name"));
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        } catch (ElementClickInterceptedException e) {
+            e.printStackTrace();
+        } catch (UnexpectedTagNameException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Type content to an element
+    protected void sendKeys(WebElement element, String data) {
+        try {
+            element.click();
+            element.sendKeys(data);
+            log.info("Added to the " + element.getAttribute("id") + ": " + data);
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to find element" + element);
+        } catch (ElementNotInteractableException e) {
+            System.err.println(element + "is not interactable");
+        }
+    }
+
+    // Clear content to an element
+    protected void clearData(WebElement element) {
+        try {
+            element.clear();
+            log.info("Data is deleted for: " + element.getAttribute("id"));
+        } catch (NoSuchElementException e) {
+            System.err.println("Unable to find element" + element);
         }
     }
 
