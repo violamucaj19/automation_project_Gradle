@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class TeflOiseCourse150HPage extends BaseTest {
     WebDriver driver;
-    public static final String CART_URL = "cartURL";
+    public static final String CART_URL = "cartUrl";
 
     public TeflOiseCourse150HPage(WebDriver driver) {
         this.driver = driver;

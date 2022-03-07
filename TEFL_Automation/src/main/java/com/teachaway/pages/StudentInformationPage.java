@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class StudentInformationPage extends BaseTest {
 
     WebDriver driver;
-    public static final String CART_URL = "cartURL";
+    public static final String CART_URL = "cartUrl";
     public static final String REFUND_POLICY_TEXT = "Refund Policy";
     public static final String CLOSE_BUTTON_TEXT = "Close Pop Up Window";
     public static final String PRIVACY_POLICY_TEXT = "Privacy Policy";

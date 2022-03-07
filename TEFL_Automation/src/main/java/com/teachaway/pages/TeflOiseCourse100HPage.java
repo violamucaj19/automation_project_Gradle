@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class TeflOiseCourse100HPage extends BaseTest {
-    public static final String CART_URL = "cartURL";
+    public static final String CART_URL = "cartUrl";
 
     public TeflOiseCourse100HPage(WebDriver driver) {
         this.driver = driver;

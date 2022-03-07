@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 public class EnrollPage extends BaseTest {
 
     WebDriver driver;
-    public static final String CART_URL = "cartURL";
+    public static final String CART_URL = "cartUrl";
     public static final String ENROLL_NOW_TEXT = "Enroll Now TEFL Course OISE";
     public static final String OISE_PRODUCT_URL = "oiseTeflCourseProductUrl";
 
