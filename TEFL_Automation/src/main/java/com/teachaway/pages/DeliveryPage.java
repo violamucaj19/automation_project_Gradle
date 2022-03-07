@@ -18,16 +18,13 @@ public class DeliveryPage extends BaseTest {
     public static final String EMAIL_UPDATE = "email_update";
     public static final String EMAIL = "email";
     public static final String DETAILS_DATA_TEXT = "details_text";
-    public static final String VALID_DISCOUNT = "10OFF";
-    public static final String APPLY_BUTTON = "Apply Button";
-
 
     public DeliveryPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//bdo[contains(text(),'viola+2@skooli.com')]")
+    @FindBy(xpath = "//bdo[contains(text(),'qateam@skooli.com')]")
     WebElement contactData;
 
     @FindBy(xpath = "//body/div[1]/div[1]/div[1]/main[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/a[1]/span[1]")
@@ -39,17 +36,8 @@ public class DeliveryPage extends BaseTest {
     @FindBy(xpath = "//button[@id='continue_button']")
     WebElement continuePayment;
 
-    @FindBy(xpath = "//bdo[contains(text(),'viola+3@skooli.com')]")
+    @FindBy(xpath = "//bdo[contains(text(),'qateam.teachaway@gmail.com')]")
     WebElement emailUpdated;
-
-    @FindBy(xpath = "//input[@id='checkout_reduction_code']")
-    WebElement discountField;
-
-    @FindBy(xpath = "//body/div[1]/div[1]/aside[1]/div[2]/div[1]/div[1]/div[2]/form[2]/div[1]/div[1]/div[1]/button[1]")
-    WebElement applyButton;
-
-    @FindBy(xpath = "//body/div[1]/div[1]/aside[1]/div[2]/div[1]/div[1]/div[2]/form[1]/div[1]")
-    WebElement discountWarning;
 
     @FindBy(xpath = "//a[contains(text(),'Student information')]")
     WebElement studentLink;
@@ -88,28 +76,19 @@ public class DeliveryPage extends BaseTest {
             clickOnElement(driver, continuePayment);
         } catch (TimeoutException e) {
             System.err.println("Unable to find the clickable element" + continuePayment);
-        }
-        catch (StaleElementReferenceException e){
-            System.err.print("The button is not clickable: "+continuePayment);
+        } catch (StaleElementReferenceException e) {
+            System.err.print("The button is not clickable: " + continuePayment);
             e.printStackTrace();
         }
         return new PaymentPage(driver);
     }
 
-    //Apply invalid Coupon
-    public void applyCoupon() {
-        sendKeys(discountField, VALID_DISCOUNT);
-//        discountField.sendKeys(VALID_DISCOUNT);
-        clickOnElementAndDisplayeText(driver, applyButton, APPLY_BUTTON);
-        waitForElement(driver, discountWarning);
-    }
-
-    public StudentInformationPage clickStudentLink(){
+    public StudentInformationPage clickStudentLink() {
         clickOnElement(driver, studentLink);
         return new StudentInformationPage(driver);
     }
 
-    public PaymentPage clickPaymentLink(){
+    public PaymentPage clickPaymentLink() {
         clickOnElement(driver, paymentLink);
 
         return new PaymentPage(driver);

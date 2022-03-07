@@ -41,13 +41,13 @@ public class CartPage extends BaseTest {
     @FindBy(xpath = "/html[1]/body[1]/main[1]/div[1]/cart-items[1]/form[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[4]/quantity-input[1]/input[1]")
     WebElement quantity120h;
 
-    @FindBy(xpath = "//td[@class='cart-item__totals right small-hide']//div[@class='cart-item__price-wrapper']//dl[@class='cart-item__discounted-prices']//dd[@class='price price--end'][contains(text(),'$796.00')]")
-    WebElement price100h;
+    @FindBy(xpath = "//td[@class='cart-item__totals right small-hide']//div[@class='cart-item__price-wrapper']")
+    WebElement priceCourse;
 
-    @FindBy(xpath = "//p[@class='totals__subtotal-value']")
-    WebElement price120h;
+    @FindBy(xpath = "//tbody/tr[@id='CartItem-2']/td[5]/div[2]/span[1]")
+    WebElement priceSecondItem;
 
-    @FindBy(xpath = "//td[@class='cart-item__totals right small-hide']//div[@class='cart-item__price-wrapper']//dl[@class='cart-item__discounted-prices']//dd[@class='price price--end'][contains(text(),'$1,196.00')]")
+    @FindBy(xpath = "//tbody/tr[@id='CartItem-1']/td[5]/div[2]")
     WebElement price150h;
 
     @FindBy(xpath = "//a[contains(text(),'100-hour OISE TEFL course')]")
@@ -55,9 +55,6 @@ public class CartPage extends BaseTest {
 
     @FindBy(xpath = "//a[contains(text(),'120-hour OISE TEFL course')]")
     WebElement oiseTeflCourse120h;
-
-    @FindBy(xpath = "//tbody/tr[@id='CartItem-1']/td[2]")
-    WebElement cartItem;
 
     @FindBy(xpath = "//button[@id='checkout']")
     WebElement checkoutButton;
@@ -92,7 +89,7 @@ public class CartPage extends BaseTest {
     // Confirm Cart data for 100-hour OISE TEFL course
     public void checkCartDataCourse100H() {
         isTextDisplayed(oiseTeflCourse, OISE_TEFL_COURSE_TEXT);
-        isTextDisplayed(price100h, properties.getProperty(PRICE_100_HOUR_COURSE_TEXT));
+        isTextDisplayed(priceCourse, properties.getProperty(PRICE_100_HOUR_COURSE_TEXT));
         isQuantityDisplayed(quantity100h, QUANTITY_100_HOUR_COURSE_TEXT);
     }
 
@@ -100,12 +97,18 @@ public class CartPage extends BaseTest {
     public void checkCartData120h() {
         waitForElement(driver, oiseTeflCourse120h);
         isTextDisplayed(oiseTeflCourse120h, TITLE_120H);
-        isTextDisplayed(price120h, properties.getProperty(PRICE_120H));
+        isTextDisplayed(priceCourse, properties.getProperty(PRICE_120H));
         isQuantityDisplayed(quantity120h, QUANTITY_120H);
     }
 
     // Confirm Cart data for 150-hour OISE TEFL course
-    public void checkCartDataCourse150H() {
+    public void checkCartDataSecondItem() {
+        isTextDisplayed(oiseCourse150h, OISE_COURSE_150H_TEXT);
+        isQuantityDisplayed(quantity100h, QUANTITY_100_HOUR_COURSE_TEXT);
+        isTextDisplayed(priceSecondItem, properties.getProperty(OISE_COURSE_150H_PRICE));
+    }
+
+    public void checkCartDataCourse150h(){
         isTextDisplayed(oiseCourse150h, OISE_COURSE_150H_TEXT);
         isQuantityDisplayed(quantity100h, QUANTITY_100_HOUR_COURSE_TEXT);
         isTextDisplayed(price150h, properties.getProperty(OISE_COURSE_150H_PRICE));
@@ -137,10 +140,10 @@ public class CartPage extends BaseTest {
     public void checkUpdatedPrize(int quantityValue) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         String price = Float.toString((quantityValue * Float.parseFloat(properties.getProperty(PRICE_120H).substring(1, 9).replace(",", ""))));
-        String priceString = "$" + price.substring(0, 1) + "," + price.substring(1, 6) + "0 USD";
+        String priceString = "$" + price.substring(0, 1) + "," + price.substring(1, 6) + "0";
         try {
-            wait.until(ExpectedConditions.textToBe(By.xpath(PRICE_PATH), priceString));
-            isTextDisplayed(price120h, priceString);
+            wait.until(ExpectedConditions.textToBe(By.xpath(PRICE_PATH), priceString + " USD"));
+            isTextDisplayed(priceCourse, priceString);
         } catch (TimeoutException e) {
             System.err.println("Unable to find element");
             e.printStackTrace();

@@ -20,6 +20,7 @@ public class StudentInformationPage extends BaseTest {
     public static final String TAX = "$103.48";
     public static final String SUBTOTAL = "$796.00";
     public static final String TOTAL = "$899.48";
+    public static final String DISCOUNT_CODE = "discountCode";
 
 
     public StudentInformationPage(WebDriver driver) {
@@ -105,6 +106,9 @@ public class StudentInformationPage extends BaseTest {
     @FindBy(xpath = "//a[contains(text(),'Delivery')]")
     WebElement deliveryLinkActivate;
 
+    @FindBy(xpath = "//span[@class='tag__text']//span[@class='reduction-code']")
+    WebElement reductionCode;
+
 
     // Click on Cart link to navigate back
     public CartPage clickCartLink() {
@@ -114,16 +118,26 @@ public class StudentInformationPage extends BaseTest {
         return new CartPage(driver);
     }
 
-    // Add invalid coupon
-    public void addCoupon(String invalidCode) {
+    // Add coupon
+    public void addCoupon(String coupon) {
         waitForElement(driver, discountCode);
-        sendKeys(discountCode, invalidCode);
+        sendKeys(discountCode, coupon);
         clickOnElementAndDisplayeText(driver, applyButton, APPLY_BUTTON_TEXT);
-        waitForElement(driver, errorDiscountMessage);
-        try {
-            log.info("Error message is displayed: " + errorDiscountMessage.getText());
-        } catch (NoSuchElementException e) {
-            System.err.println("Unable to locate element " + errorDiscountMessage);
+        if (coupon.equals(properties.getProperty(DISCOUNT_CODE))) {
+            waitForElement(driver, reductionCode);
+            try {
+                isTextDisplayed(reductionCode, coupon);
+                log.info("The coupon: " + reductionCode.getText() + " is applied.");
+            } catch (NoSuchElementException e) {
+                System.err.println("Unable to locate element " + reductionCode);
+            }
+        } else {
+            waitForElement(driver, errorDiscountMessage);
+            try {
+                log.info("Error message is displayed: " + errorDiscountMessage.getText());
+            } catch (NoSuchElementException e) {
+                System.err.println("Unable to locate element " + errorDiscountMessage);
+            }
         }
     }
 

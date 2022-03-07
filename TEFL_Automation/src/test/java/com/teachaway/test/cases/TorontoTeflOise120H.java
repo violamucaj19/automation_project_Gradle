@@ -5,7 +5,7 @@ import com.teachaway.pages.*;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class TorontoCertificationGuideTest extends BaseTest {
+public class TorontoTeflOise120H extends BaseTest {
 
     public static final int CLICKS = 1;
     public static final String INVALID_EMAIL = "erta+2";
@@ -21,6 +21,7 @@ public class TorontoCertificationGuideTest extends BaseTest {
     public static final String CONFIG_KEY_URL = "url";
     public static final String COUNTRY_OPTION = "country";
     public static final String STATE_OPTION = "state";
+    public static final String DISCOUNT_CODE = "discountCode";
 
     @Parameters({"browser", "environment"})
     @Test
@@ -49,7 +50,7 @@ public class TorontoCertificationGuideTest extends BaseTest {
         studentInformation.checkDeliveryLink();
         studentInformation.updateForm(properties.getProperty(EMAIL), properties.getProperty(NAME), properties.getProperty(ZIP_CODE));
         deliveryPage.confirmData();
-        deliveryPage.applyCoupon();
+        studentInformation.addCoupon(properties.getProperty(DISCOUNT_CODE));
         deliveryPage.clickContinuePayment();
         paymentPage.checkData(properties.getProperty(EMAIL), properties.getProperty(DETAILS));
         paymentPage.clickSaveCheckbox();

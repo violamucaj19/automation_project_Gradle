@@ -31,7 +31,6 @@ public class TorontoTeflOise150HTest  extends BaseTest {
         CartPage cartPage = new CartPage(driver);
         StudentInformationPage studentInformationPage = new StudentInformationPage(driver);
         DeliveryPage deliveryPage = new DeliveryPage(driver);
-        PaymentPage paymentPage = new PaymentPage(driver);
         OisePage oisePage = new OisePage(driver);
         TeflOiseCourse150HPage teflOiseCourse150H = new TeflOiseCourse150HPage(driver);
         CollectionsPage collectionsPage = new CollectionsPage(driver);
@@ -44,12 +43,12 @@ public class TorontoTeflOise150HTest  extends BaseTest {
         enrollPage.confirmCookies();
         enrollPage.clickEnrollNowButton150H();
         teflOiseCourse150H.clickAddCartButton();
-        cartPage.checkCartDataCourse150H();
+        cartPage.checkCartDataCourse150h();
         cartPage.clickContinueShooping();
         collectionsPage.selectOiseCourse100H();
         teflOiseCourse100HPage.clickAddCartButton();
         cartPage.checkCartDataCourse100H();
-        cartPage.checkCartDataCourse150H();
+        cartPage.checkCartDataSecondItem();
         cartPage.confirmSubtotalPrice();
         cartPage.clickCheckoutButton();
         studentInformationPage.addCoupon(properties.getProperty(DISCOUNT_CODE));

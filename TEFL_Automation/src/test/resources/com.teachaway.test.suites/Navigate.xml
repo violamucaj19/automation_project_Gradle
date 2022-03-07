@@ -12,7 +12,7 @@
             <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise100HTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise150HTest" />
-            <class name="com.teachaway.test.cases.TorontoCertificationGuideTest" />
+            <class name="com.teachaway.test.cases.TorontoTeflOise120H" />
             <class name="com.teachaway.test.cases.TorontoTeflRedirectionsTest" />
         </classes>
     </test>
@@ -24,7 +24,7 @@
             <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise100HTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise150HTest" />
-            <class name="com.teachaway.test.cases.TorontoCertificationGuideTest" />
+            <class name="com.teachaway.test.cases.TorontoTeflOise120H" />
             <class name="com.teachaway.test.cases.TorontoTeflRedirectionsTest" />
         </classes>
     </test>
@@ -36,7 +36,7 @@
             <class name="com.teachaway.test.cases.FooterWithoutNavigateBackTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise100HTest" />
             <class name="com.teachaway.test.cases.TorontoTeflOise150HTest" />
-            <class name="com.teachaway.test.cases.TorontoCertificationGuideTest" />
+            <class name="com.teachaway.test.cases.TorontoTeflOise120H" />
             <class name="com.teachaway.test.cases.TorontoTeflRedirectionsTest" />
 
         </classes>
