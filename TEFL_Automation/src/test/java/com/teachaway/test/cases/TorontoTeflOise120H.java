@@ -2,7 +2,6 @@ package com.teachaway.test.cases;
 
 import com.teachaway.base.grid.BaseTest;
 import com.teachaway.pages.*;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TorontoTeflOise120H extends BaseTest {
@@ -23,8 +22,9 @@ public class TorontoTeflOise120H extends BaseTest {
     public static final String STATE_OPTION = "state";
     public static final String DISCOUNT_CODE = "discountCode";
 
-    @Parameters({"browser", "environment"})
     @Test
+
+    // Toronto test case selected OISE TEFL Course 120 hours
     public void torontoTeflCourse120hTestCases() {
         driver.get(properties.getProperty(CONFIG_KEY_URL));
         MainPage mainPage = new MainPage(driver);

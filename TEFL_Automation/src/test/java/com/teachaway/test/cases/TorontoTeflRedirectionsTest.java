@@ -2,7 +2,6 @@ package com.teachaway.test.cases;
 
 import com.teachaway.base.grid.BaseTest;
 import com.teachaway.pages.*;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TorontoTeflRedirectionsTest extends BaseTest {
@@ -19,8 +18,9 @@ public class TorontoTeflRedirectionsTest extends BaseTest {
     public static final String COUNTRY_OPTION = "country_canada";
     public static final String STATE_OPTION = "state_canada";
 
-    @Parameters({"browser", "environment"})
     @Test
+
+    //    Toronto test case navigate back and forward using redirection links
     public void torontoTeflRedirection() {
         driver.get(properties.getProperty(CONFIG_KEY_URL));
         MainPage mainPage = new MainPage(driver);
@@ -33,6 +33,7 @@ public class TorontoTeflRedirectionsTest extends BaseTest {
         DeliveryPage deliveryPage = new DeliveryPage(driver);
         PaymentPage paymentPage = new PaymentPage(driver);
 
+        // Call all the methods created to the pages
         mainPage.clickTeflGuide();
         teflCertificationGuidePage.clickExploreButton();
         teflCertificationPage.clickGetStartedButton();

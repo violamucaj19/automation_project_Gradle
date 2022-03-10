@@ -120,23 +120,12 @@ public class BaseTest {
 
     //clicks on an element that does not redirect to another page
     protected void clickOnElement(WebDriver driver, WebElement element){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
             String text = element.getText();
-            js.executeScript("arguments[0].scrollIntoView(true);", element);
-            js.executeScript("arguments[0].click();", element);
-            log.info("Clicked " + text + "\n");
+            clickOnElementAndDisplayeText(driver, element, text);
         }
         catch (NoSuchElementException e){
             log.info("Unable to locate element with xpath: " + element + "\n");
-            e.printStackTrace();
-        }
-        catch (ElementClickInterceptedException e) {
-            System.err.println(element.getText() + " can not be clicked" + "\n");
-            e.printStackTrace();
-        }
-        catch (ElementNotInteractableException e) {
-            System.err.println(element.getText() + " is not interactable with" + "\n");
             e.printStackTrace();
         }
     }
@@ -154,11 +143,11 @@ public class BaseTest {
             e.printStackTrace();
         }
         catch (ElementClickInterceptedException e){
-            System.err.println(element.getText() + " can not be clicked" + "\n");
+            System.err.println(textToBeDisplayed + " can not be clicked" + "\n");
             e.printStackTrace();
         }
         catch (ElementNotInteractableException e) {
-            System.err.println(element.getText() + " is not interactable with" + "\n");
+            System.err.println(textToBeDisplayed + " is not interactable with" + "\n");
             e.printStackTrace();
         }
     }
@@ -288,4 +277,3 @@ public class BaseTest {
         }
     }
 }
-

@@ -2,7 +2,6 @@ package com.teachaway.test.cases;
 
 import com.teachaway.base.grid.BaseTest;
 import com.teachaway.pages.*;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TorontoTeflOise150HTest  extends BaseTest {
@@ -19,10 +18,9 @@ public class TorontoTeflOise150HTest  extends BaseTest {
     public static final String COUNTRY_OPTION = "country";
     public static final String STATE_OPTION = "state";
 
-    @Parameters({"browser", "environment"})
     @Test
 
-    // Toronto test case selected OISE TEFL Course 150H
+    // Toronto test case selected OISE TEFL Course 150H and TEFL Course 100H
     public void torontoTeflCourse150hTestCases() {
         driver.get(properties.getProperty(CONFIG_KEY_URL));
         MainPage mainPage = new MainPage(driver);

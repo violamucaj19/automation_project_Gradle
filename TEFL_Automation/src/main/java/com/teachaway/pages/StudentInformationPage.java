@@ -31,7 +31,7 @@ public class StudentInformationPage extends BaseTest {
     @FindBy(xpath = "//a[contains(text(),'Cart')]")
     WebElement cartLink;
 
-    @FindBy(xpath = "//header/nav[1]/ol[1]/li[3]/span[1]")
+    @FindBy(xpath = "//span[contains(text(),'Delivery')]")
     WebElement DeliveryLink;
 
     @FindBy(xpath = "//input[@id='checkout_reduction_code']")

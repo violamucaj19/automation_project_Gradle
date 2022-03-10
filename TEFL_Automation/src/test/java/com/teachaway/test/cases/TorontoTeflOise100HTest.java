@@ -2,7 +2,6 @@ package com.teachaway.test.cases;
 
 import com.teachaway.base.grid.BaseTest;
 import com.teachaway.pages.*;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class TorontoTeflOise100HTest extends BaseTest {
@@ -22,7 +21,6 @@ public class TorontoTeflOise100HTest extends BaseTest {
     public static final String COUNTRY_OPTION = "country";
     public static final String STATE_OPTION = "state";
 
-    @Parameters({"browser", "environment"})
     @Test
 
     // Toronto test case selected OISE TEFL Course 100 hours
