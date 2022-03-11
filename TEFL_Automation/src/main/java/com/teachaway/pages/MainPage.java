@@ -45,4 +45,3 @@ public class MainPage extends BaseTest {
         return new TeflCertificationGuidePage(driver);
     }
 }
-

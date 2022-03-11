@@ -55,4 +55,3 @@ public class TorontoTeflOise100HTest extends BaseTest {
         paymentPage.confirmForm();
     }
 }
-

@@ -61,5 +61,3 @@ public class EnrollPage extends BaseTest {
         return new TeflOiseCourse150HPage(driver);
     }
 }
-
-

@@ -25,4 +25,3 @@ public class ProductPage extends BaseTest {
         return new CartPage(driver);
     }
 }
-
