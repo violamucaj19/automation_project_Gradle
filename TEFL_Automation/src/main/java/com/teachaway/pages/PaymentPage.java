@@ -66,7 +66,7 @@ public class PaymentPage extends BaseTest {
         clickOnElementAndDisplayeText(driver, saveCheckbox, SAVE_CHECKBOX);
         waitForElement(driver, phoneInput);
         clickOnElementAndDisplayeText(driver, phoneInput, PHONE_FIELD);
-        sendKeys(phoneInput, PHONE_INPUT);
+        sendKeys(driver, phoneInput, PHONE_INPUT);
     }
 
     public DeliveryPage clickDeliveryLink() {

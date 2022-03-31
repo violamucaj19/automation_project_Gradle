@@ -50,7 +50,7 @@ public class TorontoTeflOise120H extends BaseTest {
         studentInformation.checkDeliveryLink();
         studentInformation.updateForm(properties.getProperty(EMAIL), properties.getProperty(NAME), properties.getProperty(ZIP_CODE));
         deliveryPage.confirmData();
-        studentInformation.addCoupon(properties.getProperty(DISCOUNT_CODE));
+//        studentInformation.addCoupon(properties.getProperty(DISCOUNT_CODE));
         deliveryPage.clickContinuePayment();
         paymentPage.checkData(properties.getProperty(EMAIL), properties.getProperty(DETAILS));
         paymentPage.clickSaveCheckbox();

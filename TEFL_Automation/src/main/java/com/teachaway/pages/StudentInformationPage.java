@@ -34,13 +34,16 @@ public class StudentInformationPage extends BaseTest {
     @FindBy(xpath = "//span[contains(text(),'Delivery')]")
     WebElement DeliveryLink;
 
-    @FindBy(xpath = "//input[@id='checkout_reduction_code']")
+    @FindBy(xpath = "//input[@placeholder='Discount code']")
     WebElement discountCode;
 
-    @FindBy(xpath = "//button[@id='checkout_submit']")
+//    @FindBy(xpath = "//button[@id='checkout_submit']")
+    @FindBy(xpath = "//button[@id='checkout[submit]t']")
+//    @FindBy(xpath = "//div[@class='_2qx1A _1Du_i _6mz7V _38isp']//button[@type='submit']")
     WebElement applyButton;
 
-    @FindBy(xpath = "//p[@id='error-for-reduction_code']")
+//    @FindBy(xpath = "//p[@id='error-for-reduction_code']")
+    @FindBy(xpath = "//input[@name='reductions']")
     WebElement errorDiscountMessage;
 
     @FindBy(xpath = "//p[@id='error-for-zip']")
@@ -61,34 +64,35 @@ public class StudentInformationPage extends BaseTest {
     @FindBy(className = "modal__close-button")
     WebElement CloseButtonPolicy;
 
-    @FindBy(xpath = "//input[@id='checkout_email']")
+//    @FindBy(xpath = "//input[@id='checkout_email']")
+    @FindBy(xpath = "//input[contains(@id, 'email')]")
     WebElement emailCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_first_name']")
+    @FindBy(xpath = "//input[contains(@name,'first') or contains(@id,'first')]")
     WebElement nameCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_last_name']")
+    @FindBy(xpath = "//input[contains(@name,'last') or contains(@id,'last')]")
     WebElement lastNameCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_address1']")
+    @FindBy(xpath = "//input[contains(@name, 'address1') or contains(@id,'address1')]")
     WebElement addressCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_city']")
+    @FindBy(xpath = "//input[contains(@name, 'city') or contains(@id,'city')]")
     WebElement cityCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_zip']")
+    @FindBy(xpath = "//input[contains(@name, 'zip') or contains(@name, 'postal') or contains(@id, 'zip')]")
     WebElement zipCodeCheck;
 
-    @FindBy(xpath = "//input[@id='checkout_shipping_address_phone']")
+    @FindBy(xpath = "//input[contains(@name, 'phone') or contains(@id,'phone')]")
     WebElement phoneCheck;
 
-    @FindBy(xpath = "//button[@id='continue_button']")
+    @FindBy(xpath = "//span[contains(text(),'Continue to delivery')]")
     WebElement continueDelivery;
 
-    @FindBy(xpath = "//select[@id='checkout_shipping_address_country']")
+    @FindBy(xpath = "//select[contains(@name, 'country')]")
     WebElement countryDropDownButton;
 
-    @FindBy(xpath = "//select[@id='checkout_shipping_address_province']")
+    @FindBy(xpath = "//select[contains(@name, 'province') or  contains(@name, 'zone')]")
     WebElement stateDropDownButton;
 
     @FindBy(xpath = "//span[@class='payment-due__price skeleton-while-loading--lg']")
@@ -121,7 +125,7 @@ public class StudentInformationPage extends BaseTest {
     // Add coupon
     public void addCoupon(String coupon) {
         waitForElement(driver, discountCode);
-        sendKeys(discountCode, coupon);
+        sendKeys(driver, discountCode, coupon);
         clickOnElementAndDisplayeText(driver, applyButton, APPLY_BUTTON_TEXT);
         if (coupon.equals(properties.getProperty(DISCOUNT_CODE))) {
             waitForElement(driver, reductionCode);
@@ -155,16 +159,18 @@ public class StudentInformationPage extends BaseTest {
 
     // Fill student information form
     public DeliveryPage fillForm(String email, String name, String lastname, String address, String city, String zipCode, String phone, String countryOption, String stateOption) {
-        waitForElement(driver, emailCheck);
-        sendKeys(emailCheck, email);
-        sendKeys(nameCheck, name);
-        sendKeys(lastNameCheck, lastname);
-        sendKeys(addressCheck, address);
-        sendKeys(cityCheck, city);
+//        waitForElement(driver, emailCheck);
+        sendKeys(driver,emailCheck, email);
+        sendKeys(driver,nameCheck, name);
+        sendKeys(driver, lastNameCheck, lastname);
+        sendKeys(driver, addressCheck, address);
+        sendKeys(driver, cityCheck, city);
         selectDropdownItem(countryDropDownButton, countryOption);
         selectDropdownItem(stateDropDownButton, stateOption);
-        sendKeys(zipCodeCheck, zipCode);
-        sendKeys(phoneCheck, phone);
+        sendKeys(driver, zipCodeCheck, zipCode);
+//        waitForElement(driver, phoneCheck);
+        sendKeys(driver, phoneCheck, phone);
+//        waitForElement(driver, continueDelivery);
         clickOnElement(driver, continueDelivery);
 
         return new DeliveryPage(driver);
@@ -174,12 +180,12 @@ public class StudentInformationPage extends BaseTest {
     public DeliveryPage updateForm(String email, String name, String zip) {
         waitForElement(driver, emailCheck);
         clearData(emailCheck);
-        sendKeys(emailCheck, email);
+        sendKeys(driver,emailCheck, email);
         waitForElement(driver, nameCheck);
         clearData(nameCheck);
-        sendKeys(nameCheck, name);
+        sendKeys(driver, nameCheck, name);
         clearData(zipCodeCheck);
-        sendKeys(zipCodeCheck, zip);
+        sendKeys(driver, zipCodeCheck, zip);
         clickOnElement(driver, continueDelivery);
 
         return new DeliveryPage(driver);
@@ -189,9 +195,19 @@ public class StudentInformationPage extends BaseTest {
     public void fillFormIncorrectly(String email, String name, String lastname, String address, String city, String zipCode, String phone, String countryOption, String stateOption) {
         fillForm(email, name, lastname, address, city, zipCode, phone, countryOption, stateOption);
         waitForElement(driver, zipMessage);
-        log.info("The error message is displayed: " + zipMessage.getText());
+        try {
+            log.info("The error message is displayed: " + zipMessage.getText());
+        }
+        catch (NoSuchElementException e){
+            System.err.println("Unable to locate element: "+ zipMessage);
+        }
         waitForElement(driver, emailMessage);
-        log.info("The error message is displayed: " + emailMessage.getText());
+        try {
+            log.info("The error message is displayed: " + emailMessage.getText());
+        }
+        catch (NoSuchElementException e){
+            System.err.println("Unable to locate element: "+ emailMessage);
+        }
     }
 
     public void confirmTotalValuePrice() {
@@ -199,7 +215,6 @@ public class StudentInformationPage extends BaseTest {
     }
 
     public void checkDeliveryLink() {
-
         try {
             if (DeliveryLink.getTagName().equals("span")) {
                 log.info(DeliveryLink.getText() + " is not clickable \n");

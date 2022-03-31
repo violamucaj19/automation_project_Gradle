@@ -45,7 +45,7 @@ public class TorontoTeflRedirectionsTest extends BaseTest {
         cartPage.clickCheckoutButton();
         studentInformationPage.fillForm(properties.getProperty(EMAIL), properties.getProperty(NAME), properties.getProperty(LASTNAME), properties.getProperty(ADDRESS), properties.getProperty(CITY), properties.getProperty(ZIP_CODE), properties.getProperty(PHONE), properties.getProperty(COUNTRY_OPTION), properties.getProperty(STATE_OPTION));
         deliveryPage.clickContinuePayment();
-        studentInformationPage.checkTaxesAndPricesDisplayed();
+//        studentInformationPage.checkTaxesAndPricesDisplayed();
         paymentPage.checkData(properties.getProperty(EMAIL), properties.getProperty(DETAILS));
         paymentPage.clickDeliveryLink();
         deliveryPage.clickStudentLink();
@@ -53,6 +53,6 @@ public class TorontoTeflRedirectionsTest extends BaseTest {
         cartPage.clickCheckoutButton();
         studentInformationPage.clickDeliveryLink();
         deliveryPage.clickPaymentLink();
-        studentInformationPage.checkTaxesAndPricesDisplayed();
+//        studentInformationPage.checkTaxesAndPricesDisplayed();
     }
 }

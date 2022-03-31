@@ -49,8 +49,8 @@ public class TorontoTeflOise150HTest  extends BaseTest {
         cartPage.checkCartDataSecondItem();
         cartPage.confirmSubtotalPrice();
         cartPage.clickCheckoutButton();
-        studentInformationPage.addCoupon(properties.getProperty(DISCOUNT_CODE));
-        studentInformationPage.confirmTotalValuePrice();
+//        studentInformationPage.addCoupon(properties.getProperty(DISCOUNT_CODE));
+//        studentInformationPage.confirmTotalValuePrice();
         studentInformationPage.fillForm(properties.getProperty(EMAIL), properties.getProperty(NAME), properties.getProperty(LASTNAME), properties.getProperty(ADDRESS), properties.getProperty(CITY), properties.getProperty(ZIP_CODE), properties.getProperty(PHONE), properties.getProperty(COUNTRY_OPTION), properties.getProperty(STATE_OPTION));
         deliveryPage.confirmData();
     }

@@ -238,9 +238,11 @@ public class BaseTest {
     }
 
     // Type content to an element
-    protected void sendKeys(WebElement element, String data) {
+    protected void sendKeys(WebDriver driver, WebElement element, String data) {
         try {
-            element.click();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+            js.executeScript("arguments[0].click();", element);
             element.sendKeys(data);
             log.info("Added to the " + element.getAttribute("id") + ": " + data);
         } catch (NoSuchElementException e) {
